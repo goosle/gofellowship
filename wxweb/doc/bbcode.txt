@@ -1,0 +1,11 @@
+include/function/bbocde.php
+
+1,load_bbcode_template()
+  根据style/gray/bbcode.tpl,将img等tag标签放入$bbcode_tpls,$bbcode_tpls[img]=<img width="100%" src="{URL}" />
+
+2,prepare_bbcode_template()
+$bbcode_tpl['img']= str_replace('{URL}', '\\1', $bbcode_tpl['img']);
+把url替换成正则表达式\\1
+
+3,bbencode_first_pass()
+preg_replace()把url替换\\1  

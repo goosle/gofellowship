@@ -1,0 +1,18 @@
+files:includes\attach
+
+上传附件代码在posting_attachments.php function upload_attachment()
+
+
+
+posts 表示投递的内容，包括附件，一旦附件投递后，会在atachments_desc表示，并同步posts表
+
+
+
+插入附件到bbcode:
+1,functions_attach.php get_attachments_from_post()(461 line) 获取附件信息
+2,posting_attachments.php  display_attachment_bodies 放入 attachment_list 变量
+在868 line添加了attachment_bbcode_type 变量
+3，posted_aatachemts_body.tpl 加入按钮 ，onclick="bbcode(attachment_bbcode_type,'{attach_row.U_VIEW_ATTACHMENT}')
+4,javascript Posting_body.tpl ,function bbcode(Tag,RealPath) 加了RealPath.
+
+

@@ -1,0 +1,49 @@
+1,超级面板-》会员管理
+admin_users_list.php管理会员
+表users记录了会员情况。
+user-level 含义
+/**
+* 用户权限
+* 0 表示普通用户
+* 1 超逸管理员
+* 2 论坛版主
+* 3 超级版主
+**
+/
+define('USER',	 					0);
+
+define('ADMIN', 					1);
+
+define('MOD', 
+
+2，admin/admin_ug_auth.php?mode=user&u=2 管理设置用户组在论坛(forum)读，修改，回复，下载，是否为版主等权限，
+权限记录在auth_access表,is_auth()在include/function/auth.php
+
+groups表group_type ==1 表示系统小组，设置论坛版主后，会加一个系统小组，auth_access表会映射forum_id,group_id,
+在更具user_group投射找到版主userid;
+group  
+
+						
+
+
+
+3，所以目前的权限是以论坛-小组为标的权限设置，
+改为以帖子-小组的权限设置后：
+    3-1 每个帖子可设置一个帖子小组id,即仅仅改小组可查看
+    3-2 groupcp.php 小组表列出我加入的小组，我可加入的小组和等待审核的小组，如果是user level >1 ,就可创建小组
+        点击小组http://localhost/groupcp.php?g=4
+        1，未加入小组，显示小组状态和加入小组按钮
+        2，待审核小组，显示小组状态和退出小组按钮
+        3，已加入小组，和查看小组状态和可添加，收索，查看小组帖子，小组帖子f=0
+        4，创建小组    
+
+3.4创建小组
+   1，让一些人可创建小组，在groupcp.php：1170不是admin也可建admin/admin_groups.php (user_level = admin and user_posts > 20） 
+   2，topics表加 topic_groupid字段，表示帖子所属组，forum_id=0
+   3,小组列表加查询帖子链接groupcp.php::1106  const.php define FORUM_GROUP_ID.
+   4,post.php:213 function submit_post,new topic insert group_id
+   
+   
+        
+   
+

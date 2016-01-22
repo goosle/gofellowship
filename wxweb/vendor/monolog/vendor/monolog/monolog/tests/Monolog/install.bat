@@ -1,0 +1,2 @@
+php loggertest.php
+cmd

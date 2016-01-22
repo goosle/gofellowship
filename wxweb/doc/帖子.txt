@@ -1,0 +1,16 @@
+投递
+posting.pp:621 call preare_post,
+include/functin/post.php
+submit_post
+1,prepare_post()
+  1.1 prepare_message()
+      1.1.1 bbencode_first_pass()
+  1.2 submit_post()
+
+发帖条件：
+    目前条件是管理员或回帖20条以上的用户可发帖。
+加入帖子：
+    表示参加该帖子所举行的活动，方便帖主统计。成员在topic_join表
+帖子可见性：
+     隐藏作者：表示显示帖子是不显示发帖者的姓名。
+     小组帖：只有该小组的成员才可以打开查看帖子，如果没有小组成员，则仅仅帖主本人可查看帖子。

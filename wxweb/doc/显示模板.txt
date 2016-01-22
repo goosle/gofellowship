@@ -1,0 +1,9 @@
+1,分配需要显示的模块文件
+$template->set_filenames(array(
+			'user' => 'groupcp/user_body.tpl')
+		);
+
+2，$template->assign_block_vars(xxx，v)表示可以显示块段<!-- BEGIN xxx --><!-- END xxx -->
+如果v是数组，会循环显示。块可嵌套。
+
+3,模板文件tpl变量从$template->assign_vars获取
