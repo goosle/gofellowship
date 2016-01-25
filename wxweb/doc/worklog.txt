@@ -1,2 +1,6 @@
-2012/12-8
+﻿20115/12-8
 1,在组查询中添加组的url groupcp.php :920 dejiang apppend to head title url
+
+
+2015-2-25
+bbcode.tpl ,bbcode.php，faq_bbcode.tpl 添加图片宽度和声音，视频控制方法autoplay，controls

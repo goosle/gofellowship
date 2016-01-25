@@ -47,7 +47,7 @@
 <!-- BEGIN size_open --><span style="font-size: {SIZE}px; line-height: normal"><!-- END size_open -->
 <!-- BEGIN size_close --></span><!-- END size_close -->
 
-<!-- BEGIN img --><img width="100%" src="{URL}" /><!-- END img -->
+
 
 <!-- BEGIN url --><a href="{URL}">{DESCRIPTION}</a><!-- END url -->
 
@@ -55,6 +55,11 @@
 
 <!-- BEGIN flash --><object classid="clsid:D27CDB6E-AE6D-11CF-96B8-444553540000" codebase="http://active.macromedia.com/flash2/cabs/swflash.cab#version=5,0,0,0" width="{WIDTH}" height="{HEIGHT}"><param name="movie" value="{URL}" /><param name="play" value="false" /><param name="loop" value="false" /><param name="quality" value="high" /><param name="allowScriptAccess" value="never" /><param name="allowNetworking" value="internal" /><embed src="{URL}" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" width="{WIDTH}" height="{HEIGHT}" play="false" loop="false" quality="high" allowscriptaccess="never" allownetworking="internal"></embed></object><!-- END flash -->
 
+<!-- BEGIN img --><img width="100%" src="{URL}" /><!-- END img -->
+<!-- BEGIN img_w --><img width="{WIDTH}" src="{URL}" /><!-- END img -->
+
 <!-- BEGIN audio --><audio src="{URL}" controls="controls" >你的浏览器不支持。</audio><!-- END audio -->
+<!-- BEGIN audio_c --><audio src="{URL}" {CONTROLS}="{CONTROLS}" >你的浏览器不支持。</audio><!-- END audio -->
 
 <!-- BEGIN video --><video src="{URL}" controls="controls" >你的浏览器不支持</video><!-- END video -->
+<!-- BEGIN video_c --><video src="{URL}" {CONTROLS}="{CONTROLS}" >你的浏览器不支持</video><!-- END video -->

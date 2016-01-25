@@ -58,7 +58,6 @@ function prepare_bbcode_template($bbcode_tpl)
 	$bbcode_tpl['quote_username_open'] 	= str_replace('{L_WROTE}', '写到：', $bbcode_tpl['quote_username_open']);
 	$bbcode_tpl['quote_username_open'] 	= str_replace('{USERNAME}', '\\1', $bbcode_tpl['quote_username_open']);
 	$bbcode_tpl['code_open'] 			= str_replace('{L_CODE}', '', $bbcode_tpl['code_open']);
-	$bbcode_tpl['img'] 					= str_replace('{URL}', '\\1', $bbcode_tpl['img']);
 	$bbcode_tpl['url1'] 				= str_replace('{URL}', '\\1', $bbcode_tpl['url']);
 	$bbcode_tpl['url1'] 				= str_replace('{DESCRIPTION}', '\\1', $bbcode_tpl['url1']);
 	$bbcode_tpl['url2'] 				= str_replace('{URL}', 'http://\\1', $bbcode_tpl['url']);
@@ -71,14 +70,33 @@ function prepare_bbcode_template($bbcode_tpl)
 	$bbcode_tpl['flash_width'] 			= str_replace('{WIDTH}', '\\1', $bbcode_tpl['flash']);
 	$bbcode_tpl['flash_height'] 		= str_replace('{HEIGHT}', '\\2', $bbcode_tpl['flash_width']);
 	$bbcode_tpl['flash'] 				= str_replace('{URL}', '\\3', $bbcode_tpl['flash_height']);
+	
+	//no width key image
+	$bbcode_tpl['img'] 					= str_replace('{URL}', '\\1', $bbcode_tpl['img']);
+   //image with width	
+	$bbcode_tpl['img_width']			= str_replace('{WIDTH}', '\\1', $bbcode_tpl['img_w']);
+	$bbcode_tpl['img_w'] 					= str_replace('{URL}', '\\2', $bbcode_tpl['img_width']);
+	
+	//audio without controls
 	$bbcode_tpl['audio'] 					= str_replace('{URL}', '\\1', $bbcode_tpl['audio']);
-    $bbcode_tpl['video'] 					= str_replace('{URL}', '\\1', $bbcode_tpl['video']);
+	//audio with controls
+	$bbcode_tpl['audio_control'] 		= str_replace('{CONTROLS}', '\\1', $bbcode_tpl['audio_c']);
+	$bbcode_tpl['audio_c'] 				= str_replace('{URL}', '\\2', $bbcode_tpl['audio_control']);
+	
+	//video without control
+	$bbcode_tpl['video'] 					= str_replace('{URL}', '\\1', $bbcode_tpl['video_control']);
+    //video with control
+	$bbcode_tpl['video_control'] 					= str_replace('{CONTROLS}', '\\1', $bbcode_tpl['video_c']);
+    $bbcode_tpl['video_c'] 					= str_replace('{URL}', '\\2', $bbcode_tpl['video_control']);
+	
 	define("BBCODE_TPL_READY", true);
 
 	// 这里得出的不是BBcode的效果，这是内部处理结果
 	return $bbcode_tpl;
 }
 
+
+//代替{}参数 到 //1 ,//2
 function bbencode_second_pass($text, $uid)
 {
 	global $bbcode_tpl, $userdata, $_SERVER;
@@ -124,9 +142,6 @@ function bbencode_second_pass($text, $uid)
 	$patterns = array();
 	$replacements = array();
 
-	$patterns[] = "#\[img:$uid\]([^?](?:[^\[]+|\[(?!url))*?)\[/img:$uid\]#i";
-	$replacements[] = $bbcode_tpl['img'];
-
 	$patterns[] = "#\[url\]([\w]+?://[^[:space:]]*?)\[/url\]#is";
 	$replacements[] = $bbcode_tpl['url1'];
 	$patterns[] = "#\[url\]((www|ftp)\.[^[:space:]]*?)\[/url\]#is";
@@ -139,12 +154,27 @@ function bbencode_second_pass($text, $uid)
 	$patterns[] = "#\[flash=([0-9]+),([0-9]+)\](.*?)\[/flash\]#is";
 	$replacements[] = $bbcode_tpl['flash'];
 
+	//image
+	//$patterns[] = "#\[img:$uid\]([^?](?:[^\[]+|\[(?!url))*?)\[/img:$uid\]#i";
+	$patterns[] = "#\[img\](.*?)\[/img\]#i";
+	$replacements[] = $bbcode_tpl['img'];;
+	
+	$patterns[] = "#\[img=([0-9]+%?)\](.*?)\[/img]#i";
+	$replacements[] = $bbcode_tpl['img_w'];
+	
+	//audio
 	$patterns[] = "#\[audio\](.*?)\[/audio\]#is";
 	$replacements[] = $bbcode_tpl['audio'];
+    $patterns[] = "#\[audio=(\w+)\](.*?)\[/audio\]#is";
+	$replacements[] = $bbcode_tpl['audio_c'];
 	
+	//video	
 	$patterns[] = "#\[video\](.*?)\[/video\]#is";
 	$replacements[] = $bbcode_tpl['video'];
+	$patterns[] = "#\[video=(\w+)\](.*?)\[/video\]#is";
+	$replacements[] = $bbcode_tpl['video_c'];
 	
+	//email
 	$patterns[] = "#\[email\]([a-z0-9&\-_.]+?@[\w\-]+\.([\w\-\.]+\.)?[\w]+)\[/email\]#si";
 	$replacements[] = $bbcode_tpl['email'];
 	
@@ -189,7 +219,7 @@ function bbencode_first_pass($text, $uid)
 	$text = preg_replace("#\[u\](.*?)\[/u\]#si", "[u:$uid]\\1[/u:$uid]", $text);
 	$text = preg_replace("#\[i\](.*?)\[/i\]#si", "[i:$uid]\\1[/i:$uid]", $text);
 	//$text = preg_replace("#\[img\]((http|ftp|https|ftps)://)([^ \?&=\#\"\n\r\t<]*?(\.(jpg|jpeg|gif|png)))\[/img\]#sie", "'[img:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/img:$uid]'", $text);
-    $text = preg_replace("#\[img\]([^ \?&=\#\"\n\r\t<]*?(\.(jpg|jpeg|gif|png)))\[/img\]#sie", "'[img:$uid]' . str_replace(' ', '%20', '\\1') . '[/img:$uid]'", $text);
+   //  $text = preg_replace("#\[img\]([^ \?&=\#\"\n\r\t<]*?(\.(jpg|jpeg|gif|png)))\[/img\]#sie", "'[img:$uid]' . str_replace(' ', '%20', '\\1') . '[/img:$uid]'", $text);
 
 	return substr($text, 1);;
 

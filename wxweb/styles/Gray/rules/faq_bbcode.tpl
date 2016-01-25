@@ -48,11 +48,13 @@
 						[email]mail@phpbb-wap.com[/email] => <a href="mailto:mail@phpbb-wap.com">mail@phpbb-wap.com</a>
 					</p>
 					<hr />
-					<p>[img]http://www.baidu.com/img/bdlogo.gif[/img] => <img src="http://www.baidu.com/img/bdlogo.gif" width="190" height="90"/></p>
+					<p>[img=40%]http://www.baidu.com/img/bdlogo.gif[/img] => 图片显示，可通过=后面的宽度百分数来调节宽度<img src="http://www.baidu.com/img/bdlogo.gif" width="40%" ight="90"/></p>
 					<hr />
-					<p>[flash=宽度,高度]http://xxx.com/xxx.swf[/flash] => Flash视频播放窗口，flash播放需要浏览器支持</p>
+					<p>[flash=宽度,高度]http://xxx.com/xxx.swf[/flash] => Flash视频播放窗口，可通过=后面的宽度，高度属性设置大小，flash播放需要浏览器支持</p>
 					<hr>
-					<p>[audio]http://xxx.com/xxx.mp3[/audio] => MP3播放，MP3播放需要浏览器支持</p>
-					<p>[video]http://xxx.com/xxx.mp4[/vedio] => MP4播放，MP4播放需要浏览器支持</p>
+					<p>[audio=controls]http://xxx.com/xxx.mp3[/audio] => 声音播放，可通过=后面的控制字段来控制播放方法，audio播放需要浏览器支持</p>
+					controls:表示手动控制播放
+					autoplay:表示字段自动播放
+					<p>[video=controls]http://xxx.com/xxx.mp4[/vedio] => 视频播放，MP4播放需要浏览器支持</p>
 				</div>
 			</div>
